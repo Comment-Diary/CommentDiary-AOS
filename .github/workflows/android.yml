@@ -59,7 +59,7 @@ jobs:
         echo kakao_app_key="$KAKAO_APP_KEY" >> ./local.properties
         echo kakao_oauth_key="$KAKAO_OAUTH_KEY" >> ./local.properties
         echo RELEASE_STORE_FILE="$RELEASE_STORE_FILE" >> ./local.properties
-        echo RELEASE_STORE_PASSWORDE="$RELEASE_STORE_PASSWORD" >> ./local.properties
+        echo RELEASE_STORE_PASSWORD="$RELEASE_STORE_PASSWORD" >> ./local.properties
         echo RELEASE_KEY_ALIAS="$RELEASE_KEY_ALIAS" >> ./local.properties
         echo RELEASE_KEY_PASSWORD="$RELEASE_KEY_PASSWORD" >> ./local.properties
 

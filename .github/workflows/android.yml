@@ -23,6 +23,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    
     - name: Cache Gradle packages
       uses: actions/cache@v2
       with:
@@ -45,7 +46,7 @@ jobs:
     - name: Unzip Services
       run: tar xvf services.tar
   
-  #secret secret 환경 변수 local.properties에 추가
+    #secret secret 환경 변수 local.properties에 추가
     - name: Decode Secret Action (local.properties)
       env:
         KAKAO_APP_KEY: ${{secrets.KAKAO_APP_KEY}}
@@ -61,8 +62,16 @@ jobs:
         echo RELEASE_STORE_PASSWORDE="$RELEASE_STORE_PASSWORD" >> ./local.properties
         echo RELEASE_KEY_ALIAS="$RELEASE_KEY_ALIAS" >> ./local.properties
         echo RELEASE_KEY_PASSWORD="$RELEASE_KEY_PASSWORD" >> ./local.properties
-        
+
+    # 키스토어 생성
+    - name: Generate Keystore file from Github Secrets
+      env: 
+        BASE_64_KEYSTORE: ${{secrets.BASE_64_KEYSTORE}}
+      run: |
+        echo "$BASE_64_KEYSTORE" > ./app/keystore/keystore.b64
+        base64 -d -i ./app/keystore/keystore.b64 > ./app/keystore/coda-upload-key0.jks
   
+    # 앱 빌드
     - name: Build debug APK
       run: bash ./gradlew assembleDebug --stacktrace
 

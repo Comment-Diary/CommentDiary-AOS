@@ -34,7 +34,22 @@ android {
         //API keys
         buildConfigField "String", "KAKAO_APP_KEY", properties['kakao_app_key']
         //manifest에서 사용할 경우
-        manifestPlaceholders ["KAKAO_OAUTH_KEY"] = properties['kakao_oauth_key']
+        manifestPlaceholders["KAKAO_OAUTH_KEY"] = properties['kakao_oauth_key']
+    }
+    signingConfigs {
+        release {
+            storeFile file(properties['RELEASE_STORE_FILE'])
+            storePassword properties['RELEASE_STORE_PASSWORD']
+            keyAlias properties['RELEASE_KEY_ALIAS']
+            keyPassword properties['RELEASE_KEY_PASSWORD']
+//            storeFile file("../app/keystore/coda-upload-keystore.jks")
+//            storePassword "young970221!"
+//            keyAlias "coda-upload-key0"
+//            keyPassword "young970221!"
+        }
+//        debug {
+//            storeFile file("../app/keystore/debug.keystore")
+//        }
     }
 
     buildTypes {
@@ -42,8 +57,12 @@ android {
 //            프로가드 미사용
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
             //디버그 테스트할 때  사용
             debuggable false
+        }
+        debug {
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -54,7 +73,7 @@ android {
         jvmTarget = '1.8'
     }
 
-    dataBinding{
+    dataBinding {
         enabled = true
     }
 }
